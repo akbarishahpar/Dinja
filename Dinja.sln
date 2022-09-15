@@ -2,8 +2,6 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dinja", "Dinja\Dinja.csproj", "{98AD7777-85EA-47CE-A698-72FFC7EE6304}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dinja.Tests", "Dinja.Tests\Dinja.Tests.csproj", "{B8E6FF8F-0EDA-46E3-934A-5C78C29AB3AB}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -14,9 +12,5 @@ Global
 		{98AD7777-85EA-47CE-A698-72FFC7EE6304}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{98AD7777-85EA-47CE-A698-72FFC7EE6304}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{98AD7777-85EA-47CE-A698-72FFC7EE6304}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B8E6FF8F-0EDA-46E3-934A-5C78C29AB3AB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B8E6FF8F-0EDA-46E3-934A-5C78C29AB3AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B8E6FF8F-0EDA-46E3-934A-5C78C29AB3AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B8E6FF8F-0EDA-46E3-934A-5C78C29AB3AB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
