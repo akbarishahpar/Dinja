@@ -1,5 +1,4 @@
 ﻿using System.Reflection;
-using System.Security.Cryptography.X509Certificates;
 using Microsoft.Extensions.Options;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -85,7 +84,7 @@ namespace Dinja
             return this;
         }
 
-        public Registry CreateContainer(Assembly assembly)
+        public Registry AddContainer(Assembly assembly)
         {
             var container = new Container(assembly);
             return AddContainer(container);
