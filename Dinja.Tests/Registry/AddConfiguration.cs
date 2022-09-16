@@ -15,7 +15,7 @@ public class AddConfiguration
     public void Should_throw_KeyNotFoundException_if_specified_key_was_none_existent()
     {
         //Arrange
-        const string noneExistentKey = "GhostKey";
+        const string noneExistentKey = "SomeRandomKey";
 
         //Act
         void Act()
@@ -37,6 +37,19 @@ public class AddConfiguration
         void Act()
         {
             _registry.AddConfiguration<Version>(existentKey);
+        }
+
+        //Assert
+        Assert.DoesNotThrow(Act);
+    }
+    
+    [Test]
+    public void Should_does_not_throw_if_mapped_key_from_type_was_correct()
+    {
+        //Act
+        void Act()
+        {
+            _registry.AddConfiguration<Version>();
         }
 
         //Assert
