@@ -18,7 +18,7 @@ namespace Dinja
             _assembly = assembly;
         }
 
-        public virtual void ConfigureServices(IServiceCollection serviceCollection, IConfiguration configuration)
+        public void ConfigureServices(IServiceCollection serviceCollection, IConfiguration configuration)
         {
             var serviceTypes = _assembly.GetExportedTypes()
                 .Where(type => type.IsClass || type.IsInterface)
