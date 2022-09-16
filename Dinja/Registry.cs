@@ -24,7 +24,7 @@ namespace Dinja
             var path = configurationJsonPath;
             if (!Path.IsPathRooted(configurationJsonPath))
                 path = Path.Combine(basePath, configurationJsonPath);
-            
+
             if (!File.Exists(path))
                 throw new FileNotFoundException(path);
 
@@ -34,10 +34,22 @@ namespace Dinja
                 .Build();
         }
 
+        public Registry AddConfiguration<T>() where T : class
+        {
+            return AddConfiguration<T>(typeof(T).Name);
+        }
+
         public Registry AddConfiguration<T>(string key) where T : class
         {
-            _services.Configure<T>(_configuration.GetSection(key));
-            _services.AddSingleton(sp => sp.GetRequiredService<IOptions<T>>().Value);
+            var configurationSection = _configuration.GetSection(key);
+            if (configurationSection.Value == null && !configurationSection.GetChildren().Any())
+                throw new KeyNotFoundException();
+            _services.Configure<T>(configurationSection);
+            _services.AddSingleton(sp =>
+            {
+                var value = sp.GetRequiredService<IOptions<T>>().Value;
+                return value;
+            });
             return this;
         }
 

@@ -4,10 +4,10 @@
 public class Registry
 {
     [Test]
-    public void Should_throw_FileNotFoundException_if_it_was_none_existent()
+    public void Should_throw_FileNotFoundException_if_specified_path_was_none_existent()
     {
         //Arrange
-        var noneExistentFilePath = "NoneExistentFilePath.json";
+        const string noneExistentFilePath = "NoneExistentFilePath.json";
 
         //Act
         void Act()
@@ -23,7 +23,7 @@ public class Registry
     public void Should_does_not_throw_if_correct_json_file_was_supplied()
     {
         //Arrange
-        var existentFilePath = "appsettings.json";
+        const string existentFilePath = "appsettings.json";
 
         //Act
         void Act()
