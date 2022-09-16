@@ -17,21 +17,21 @@ public class AddEntryPoint
     {
         _registry
             .AddConfiguration<Models.Version>()
-            .AddEntryPoint<Program>(program => program.Main());
+            .AddEntryPoint<App>(program => program.Main());
     }
-}
-
-public class Program
-{
-    private readonly Models.Version _version;
-
-    public Program(Models.Version version)
+    
+    class App
     {
-        _version = version;
-    }
+        private readonly Models.Version _version;
+
+        public App(Models.Version version)
+        {
+            _version = version;
+        }
         
-    public void Main()
-    {
-        Console.WriteLine(_version.Major);
+        public void Main()
+        {
+            Console.WriteLine(_version.Major);
+        }
     }
 }
