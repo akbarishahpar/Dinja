@@ -55,20 +55,4 @@ public class AddConfiguration
         //Assert
         Assert.DoesNotThrow(Act);
     }
-    
-    [Test]
-    public void Should_does_not_throw_if_specified_key_for_shallow_configuration_was_correct()
-    {
-        //Arrange
-        const string existentKey = "Name";
-
-        //Act
-        void Act()
-        {
-            _registry.AddConfiguration<string>(existentKey);
-        }
-
-        //Assert
-        Assert.DoesNotThrow(Act);
-    }
 }

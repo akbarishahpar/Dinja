@@ -1,4 +1,5 @@
 ﻿using System.Reflection;
+using Dinja.Exceptions;
 using Microsoft.Extensions.Options;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -42,14 +43,12 @@ namespace Dinja
         public Registry AddConfiguration<T>(string key) where T : class
         {
             var configurationSection = _configuration.GetSection(key);
-            if (configurationSection.Value == null && !configurationSection.GetChildren().Any())
+            if (!string.IsNullOrEmpty(configurationSection.Value))
+                throw new ShallowConfigurationIsNotSupported(key);
+            if (!configurationSection.GetChildren().Any())
                 throw new KeyNotFoundException();
             _services.Configure<T>(configurationSection);
-            _services.AddSingleton(sp =>
-            {
-                var value = sp.GetRequiredService<IOptions<T>>().Value;
-                return value;
-            });
+            _services.AddSingleton(sp => sp.GetRequiredService<IOptions<T>>().Value);
             return this;
         }
 
