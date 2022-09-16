@@ -16,16 +16,21 @@ namespace Dinja
             _configuration = LoadConfigurationJson(configurationJsonPath);
         }
 
-        private static IConfigurationRoot LoadConfigurationJson(string path)
+        private static IConfigurationRoot LoadConfigurationJson(string configurationJsonPath)
         {
             var parentDirectory = Directory.GetParent(AppContext.BaseDirectory);
+            var basePath = parentDirectory?.FullName ?? string.Empty;
 
-            if (parentDirectory == null)
-                throw new DirectoryNotFoundException("Parent directory is not accessible");
+            var path = configurationJsonPath;
+            if (!Path.IsPathRooted(configurationJsonPath))
+                path = Path.Combine(basePath, configurationJsonPath);
+            
+            if (!File.Exists(path))
+                throw new FileNotFoundException(path);
 
             return new ConfigurationBuilder()
-                .SetBasePath(parentDirectory.FullName)
-                .AddJsonFile(path, false)
+                .SetBasePath(basePath)
+                .AddJsonFile(configurationJsonPath, false)
                 .Build();
         }
 
