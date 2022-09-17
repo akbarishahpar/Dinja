@@ -2,8 +2,7 @@
 
 namespace Dinja.Tests.Container.Services;
 
-[Configuration(nameof(Registry.Models.AppVersion))]
+[Configuration(nameof(AppVersion))]
 public class AppVersion
 {
-    
 }

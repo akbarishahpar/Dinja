@@ -2,6 +2,7 @@
 using Dinja.Tests.Container.Services;
 using Dinja.Tests.Container.Services.Contracts;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 
 namespace Dinja.Tests.Container;
 
@@ -23,15 +24,20 @@ public class ConfigureServices
         {
             Assert.That(serviceCollection
                     .Where(s => s.Lifetime == ServiceLifetime.Singleton)
-                    .Any(s => s.ImplementationType == typeof(SingletonService))
+                    .Any(s => s.ServiceType == typeof(AppVersion))
+                , Is.True);
+            
+            Assert.That(serviceCollection
+                    .Where(s => s.Lifetime == ServiceLifetime.Singleton)
+                    .Any(s => s.ServiceType == typeof(SingletonService))
                 , Is.True);
             Assert.That(serviceCollection
                     .Where(s => s.Lifetime == ServiceLifetime.Scoped)
-                    .Any(s => s.ImplementationType == typeof(ScopedService))
+                    .Any(s => s.ServiceType == typeof(ScopedService))
                 , Is.True);
             Assert.That(serviceCollection
                     .Where(s => s.Lifetime == ServiceLifetime.Transient)
-                    .Any(s => s.ImplementationType == typeof(TransientService))
+                    .Any(s => s.ServiceType == typeof(TransientService))
                 , Is.True);
             
             Assert.That(serviceCollection
@@ -48,6 +54,12 @@ public class ConfigureServices
                     .Where(s => s.Lifetime == ServiceLifetime.Transient)
                     .Where(s => s.ServiceType == typeof(IContractedTransientService))
                     .Any(s => s.ImplementationType == typeof(ContractedTransientService))
+                , Is.True);
+            
+            Assert.That(serviceCollection
+                    .Where(s => s.Lifetime == ServiceLifetime.Singleton)
+                    .Where(s => s.ServiceType == typeof(IHostedService))
+                    .Any(s => s.ImplementationType == typeof(HostedService))
                 , Is.True);
         });
     }
