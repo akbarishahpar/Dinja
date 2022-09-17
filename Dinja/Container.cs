@@ -84,7 +84,7 @@ namespace Dinja
                     var configurationValue = configurationType.GetProperty("Value")?.GetValue(service);
                     if (configurationValue == null)
                         throw new Exception();
-                    return configuration;
+                    return configurationValue;
                 });
         }
     }
