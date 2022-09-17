@@ -13,17 +13,17 @@
     {
         public ServiceLifeCycle LifeCycle { get; }
 
-        public Type ImplementationType { get; }
+        public Type ServiceType { get; }
 
         public Service(ServiceLifeCycle lifeCycle)
         {
             LifeCycle = lifeCycle;
         }
 
-        public Service(ServiceLifeCycle lifeCycle, Type implementationType)
+        public Service(ServiceLifeCycle lifeCycle, Type serviceType)
         {
             LifeCycle = lifeCycle;
-            ImplementationType = implementationType;
+            ServiceType = serviceType;
         }
     }
 }

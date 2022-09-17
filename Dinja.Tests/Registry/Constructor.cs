@@ -1,7 +1,7 @@
 ﻿namespace Dinja.Tests.Registry;
 
 [TestFixture]
-public class Registry
+public class Constructor
 {
     [Test]
     public void Should_throw_FileNotFoundException_if_specified_path_was_none_existent()

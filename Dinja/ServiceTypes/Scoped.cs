@@ -6,7 +6,7 @@
         {
         }
 
-        public Scoped(Type implementationType) : base(ServiceLifeCycle.Scoped, implementationType)
+        public Scoped(Type serviceType) : base(ServiceLifeCycle.Scoped, serviceType)
         {
         }
     }

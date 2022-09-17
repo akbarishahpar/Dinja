@@ -8,16 +8,17 @@ namespace Dinja
 {
     public class Registry
     {
-        private readonly IServiceCollection _services;
         private readonly IConfigurationRoot _configuration;
+        
+        public IServiceCollection Services { get; }
 
         public Registry(string configurationJsonPath)
         {
-            _services = new ServiceCollection();
+            Services = new ServiceCollection();
             _configuration = LoadConfigurationJson(configurationJsonPath);
         }
 
-        private static IConfigurationRoot LoadConfigurationJson(string configurationJsonPath)
+        public static IConfigurationRoot LoadConfigurationJson(string configurationJsonPath)
         {
             var parentDirectory = Directory.GetParent(AppContext.BaseDirectory);
             var basePath = parentDirectory?.FullName ?? string.Empty;
@@ -44,59 +45,59 @@ namespace Dinja
         {
             var configurationSection = _configuration.GetSection(key);
             if (!string.IsNullOrEmpty(configurationSection.Value))
-                throw new ShallowConfigurationIsNotSupported(key);
+                throw new ShallowConfigurationIsNotSupportedException(key);
             if (!configurationSection.GetChildren().Any())
                 throw new KeyNotFoundException();
-            _services.Configure<T>(configurationSection);
-            _services.AddSingleton(sp => sp.GetRequiredService<IOptions<T>>().Value);
+            Services.Configure<T>(configurationSection);
+            Services.AddSingleton(sp => sp.GetRequiredService<IOptions<T>>().Value);
             return this;
         }
 
         public Registry AddSingleton<TService>()
             where TService : class
         {
-            _services.AddSingleton<TService>();
+            Services.AddSingleton<TService>();
             return this;
         }
 
         public Registry AddSingleton<TService, TImplementation>()
             where TService : class where TImplementation : class, TService
         {
-            _services.AddSingleton<TService, TImplementation>();
+            Services.AddSingleton<TService, TImplementation>();
             return this;
         }
 
         public Registry AddScoped<TService>()
             where TService : class
         {
-            _services.AddScoped<TService>();
+            Services.AddScoped<TService>();
             return this;
         }
 
         public Registry AddScoped<TService, TImplementation>()
             where TService : class where TImplementation : class, TService
         {
-            _services.AddScoped<TService, TImplementation>();
+            Services.AddScoped<TService, TImplementation>();
             return this;
         }
 
         public Registry AddTransient<TService>()
             where TService : class
         {
-            _services.AddTransient<TService>();
+            Services.AddTransient<TService>();
             return this;
         }
 
         public Registry AddTransient<TService, TImplementation>()
             where TService : class where TImplementation : class, TService
         {
-            _services.AddTransient<TService, TImplementation>();
+            Services.AddTransient<TService, TImplementation>();
             return this;
         }
 
         public Registry AddContainer<T>(T container) where T : Container
         {
-            container.ConfigureServices(_services, _configuration);
+            container.ConfigureServices(Services, _configuration);
             return this;
         }
 
@@ -110,7 +111,7 @@ namespace Dinja
         {
             AddSingleton<T>();
 
-            var serviceProvider = _services.BuildServiceProvider();
+            var serviceProvider = Services.BuildServiceProvider();
             var entryPointService = serviceProvider.GetRequiredService<T>();
 
             entryPoint(entryPointService);

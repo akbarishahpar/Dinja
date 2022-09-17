@@ -1,16 +1,10 @@
-﻿namespace Dinja.Tests.Registry;
+﻿using Dinja.Tests.Registry.Models;
+
+namespace Dinja.Tests.Registry;
 
 [TestFixture]
-public class AddConfiguration
+public class AddConfiguration : TestFixtureBase
 {
-    private Dinja.Registry _registry;
-
-    [SetUp]
-    public void SetUp()
-    {
-        _registry = new Dinja.Registry("appsettings.json");
-    }
-
     [Test]
     public void Should_throw_KeyNotFoundException_if_specified_key_was_none_existent()
     {
@@ -20,7 +14,7 @@ public class AddConfiguration
         //Act
         void Act()
         {
-            _registry.AddConfiguration<Version>(noneExistentKey);
+            Registry.AddConfiguration<AppVersion>(noneExistentKey);
         }
 
         //Assert
@@ -31,12 +25,12 @@ public class AddConfiguration
     public void Should_does_not_throw_if_specified_key_was_correct()
     {
         //Arrange
-        const string existentKey = "Version";
+        const string existentKey = "AppVersion";
 
         //Act
         void Act()
         {
-            _registry.AddConfiguration<Version>(existentKey);
+            Registry.AddConfiguration<AppVersion>(existentKey);
         }
 
         //Assert
@@ -49,7 +43,7 @@ public class AddConfiguration
         //Act
         void Act()
         {
-            _registry.AddConfiguration<Version>();
+            Registry.AddConfiguration<AppVersion>();
         }
 
         //Assert

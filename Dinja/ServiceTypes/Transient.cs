@@ -6,7 +6,7 @@
         {
         }
 
-        public Transient(Type implementationType) : base(ServiceLifeCycle.Transient, implementationType)
+        public Transient(Type serviceType) : base(ServiceLifeCycle.Transient, serviceType)
         {
         }
     }

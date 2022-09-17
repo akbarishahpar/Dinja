@@ -6,7 +6,7 @@
         {
         }
 
-        public Singleton(Type implementationType) : base(ServiceLifeCycle.Singleton, implementationType)
+        public Singleton(Type serviceType) : base(ServiceLifeCycle.Singleton, serviceType)
         {
         }
     }

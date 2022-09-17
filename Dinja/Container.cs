@@ -1,6 +1,7 @@
 ﻿using System.Reflection;
 using Dinja.ServiceTypes;
 using System.ComponentModel;
+using Dinja.Exceptions;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using Microsoft.Extensions.Configuration;
@@ -20,17 +21,17 @@ namespace Dinja
 
         public void ConfigureServices(IServiceCollection serviceCollection, IConfiguration configuration)
         {
-            var serviceTypes = _assembly.GetExportedTypes()
+            var implementationTypes = _assembly.GetExportedTypes()
                 .Where(type => type.IsClass || type.IsInterface)
                 .Where(type => type.GetCustomAttributes(typeof(Service), true).Length > 0)
                 .ToList();
 
-            foreach (var serviceType in serviceTypes)
+            foreach (var implementationType in implementationTypes)
             {
-                var attributes = serviceType.GetCustomAttributes(typeof(Service), true);
+                var attributes = implementationType.GetCustomAttributes(typeof(Service), true);
                 foreach (Service attribute in attributes)
                 {
-                    var implementationType = attribute.ImplementationType ?? serviceType;
+                    var serviceType = attribute.ServiceType ?? implementationType;
                     switch (attribute.LifeCycle)
                     {
                         case ServiceLifeCycle.Singleton:

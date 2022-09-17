@@ -1,37 +1,35 @@
 ﻿namespace Dinja.Tests.Registry;
 
 [TestFixture]
-public class AddEntryPoint
+public class AddEntryPoint : TestFixtureBase
 {
-    private Dinja.Registry _registry;
-
-    [SetUp]
-    public void SetUp()
-    {
-        _registry = new Dinja.Registry("appsettings.json");
-    }
-
-    
     [Test]
     public void Should_run_entry_point_with_injected_dependencies()
     {
-        _registry
-            .AddConfiguration<Models.Version>()
-            .AddEntryPoint<App>(program => program.Main());
+        Registry
+            .AddConfiguration<Models.AppVersion>()
+            .AddEntryPoint<App>(program => program.EntryPoint());
     }
     
-    class App
+    // ReSharper disable once ClassNeverInstantiated.Local
+    private class App
     {
-        private readonly Models.Version _version;
+        private readonly Models.AppVersion _appVersion;
 
-        public App(Models.Version version)
+        public App(Models.AppVersion appVersion)
         {
-            _version = version;
+            _appVersion = appVersion;
         }
-        
-        public void Main()
+
+        public void EntryPoint()
         {
-            Console.WriteLine(_version.Major);
+            Assert.Multiple(() =>
+            {
+                Assert.That(_appVersion, Is.Not.Null);
+                Assert.That(_appVersion.Major, Is.EqualTo(1));
+                Assert.That(_appVersion.Minor, Is.EqualTo(0));
+                Assert.That(_appVersion.Patch, Is.EqualTo(0));
+            });
         }
     }
 }

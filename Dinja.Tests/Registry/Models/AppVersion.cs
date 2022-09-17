@@ -1,6 +1,6 @@
-﻿namespace Dinja.Tests.Models;
+﻿namespace Dinja.Tests.Registry.Models;
 
-public class Version
+public class AppVersion : IAppVersion
 {
     public int Major { get; set; }
     public int Minor { get; set; }
