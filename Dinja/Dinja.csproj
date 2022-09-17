@@ -4,7 +4,22 @@
         <TargetFramework>net6.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
+        <Title>Dinja</Title>
+        <Authors>akbarishahpar</Authors>
+        <Description>DotNet Depenedency Injection Ninja!</Description>
+        <PackageProjectUrl>https://github.com/akbarishahpar/Dinja</PackageProjectUrl>
+        <RepositoryUrl>https://github.com/akbarishahpar/Dinja</RepositoryUrl>
+        <PackageTags>Dependency Injection, IoC, Dinja</PackageTags>
+        <PackageLicenseFile>LICENSE</PackageLicenseFile>
+        <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
     </PropertyGroup>
+
+    <ItemGroup>
+      <None Include="..\LICENSE">
+        <Pack>True</Pack>
+        <PackagePath>\</PackagePath>
+      </None>
+    </ItemGroup>
 
     <ItemGroup>
       <PackageReference Include="Microsoft.Extensions.Configuration" Version="7.0.0-rc.1.22426.10" />

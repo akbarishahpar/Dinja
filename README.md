@@ -173,3 +173,57 @@ Developers may use methods listed below to register their services:
           }
       }
       ```
+
+Now that we got familiar with these attributes, the only thing remains is to call **AddContainer** method on a registry. take look at the following example again.					
+
+```c#
+using System.Reflection;
+using Dinja;
+using Dinja.Examples.ConsoleApp;
+using Microsoft.Extensions.DependencyInjection;
+
+var registry = new Registry("appsettings.json")
+    .AddContainer(Assembly.GetExecutingAssembly());
+```
+
+The **AddContainer** method searches the provided assembly for classes which are decorated with mentioned above and add them automatically to the registry.
+
+
+
+# Integration with ASP.Net Core
+
+Dinja also can be used alongside with ASP.Net Core. After placing attributes on top of service implementations, the method **AddContainer** can be called on **services** object inside **Startup.cs**. Look at this:
+
+```c#
+public void ConfigureServices(IServiceCollection services)
+{
+    services.AddContainer(Assembly.GetExecutingAssembly());    
+    services.AddRazorPages();
+    services.AddResponseCaching();
+    services.AddControllers();
+}
+```
+
+
+
+Also, it is possible to create a new class extending **Container** class and register it using following code.
+
+```c#
+services.AddContainer<MyContainer>(Configuration); //Configuration is a global variable inside Startup.cs
+```
+
+
+
+# Where can I get it?
+
+First, [install NuGet](http://docs.nuget.org/docs/start-here/installing-nuget). Then, install **Dinja** from the package manager console:
+
+```
+PM> Install-Package Dinja
+```
+
+Or from the .NET CLI as:
+
+```
+dotnet add package Dinja
+```
