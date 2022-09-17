@@ -1,4 +1,4 @@
-![](https://raw.githubusercontent.com/akbarishahpar/Dinja/main/logo.png)
+<p align="center"><img src="https://raw.githubusercontent.com/akbarishahpar/Dinja/main/logo.png" alt="Dinja" /></p>
 
 # Dinja
 
