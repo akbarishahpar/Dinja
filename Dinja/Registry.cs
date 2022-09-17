@@ -3,6 +3,7 @@ using Dinja.Exceptions;
 using Microsoft.Extensions.Options;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 
 namespace Dinja
 {
@@ -36,6 +37,12 @@ namespace Dinja
                 .Build();
         }
 
+        public Registry RegisterByExtensionMethod(Action<IServiceCollection> action)
+        {
+            action(Services);
+            return this;
+        }
+        
         public Registry AddConfiguration<T>() where T : class
         {
             return AddConfiguration<T>(typeof(T).Name);
@@ -94,7 +101,14 @@ namespace Dinja
             Services.AddTransient<TService, TImplementation>();
             return this;
         }
-
+        
+        public Registry AddHostedService<TImplementation>()
+            where TImplementation : class, IHostedService
+        {
+            Services.AddHostedService<TImplementation>();
+            return this;
+        }
+        
         public Registry AddContainer<T>(T container) where T : Container
         {
             container.ConfigureServices(Services, _configuration);
@@ -115,6 +129,16 @@ namespace Dinja
             var entryPointService = serviceProvider.GetRequiredService<T>();
 
             entryPoint(entryPointService);
+        }
+        
+        public async Task AddEntryPointAsync<T>(Func<T, Task> entryPoint) where T : class
+        {
+            AddSingleton<T>();
+
+            var serviceProvider = Services.BuildServiceProvider();
+            var entryPointService = serviceProvider.GetRequiredService<T>();
+
+            await entryPoint(entryPointService);
         }
     }
 }

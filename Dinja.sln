@@ -4,6 +4,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dinja", "Dinja\Dinja.csproj
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dinja.Tests", "Dinja.Tests\Dinja.Tests.csproj", "{227908DB-AB74-4138-8744-C5D1A47DCBE1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dinja.Examples.ConsoleApp", "Dinja.Examples.ConsoleApp\Dinja.Examples.ConsoleApp.csproj", "{3FA0C2A2-C307-47A5-B2C8-A4C2D83FDCDD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +20,9 @@ Global
 		{227908DB-AB74-4138-8744-C5D1A47DCBE1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{227908DB-AB74-4138-8744-C5D1A47DCBE1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{227908DB-AB74-4138-8744-C5D1A47DCBE1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3FA0C2A2-C307-47A5-B2C8-A4C2D83FDCDD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3FA0C2A2-C307-47A5-B2C8-A4C2D83FDCDD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3FA0C2A2-C307-47A5-B2C8-A4C2D83FDCDD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3FA0C2A2-C307-47A5-B2C8-A4C2D83FDCDD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
