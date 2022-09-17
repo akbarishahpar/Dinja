@@ -9,14 +9,26 @@
         <Description>DotNet Depenedency Injection Ninja!</Description>
         <PackageProjectUrl>https://github.com/akbarishahpar/Dinja</PackageProjectUrl>
         <RepositoryUrl>https://github.com/akbarishahpar/Dinja</RepositoryUrl>
-        <PackageTags>Dependency Injection, IoC, Dinja</PackageTags>
-        <PackageLicenseFile>LICENSE</PackageLicenseFile>
+        <PackageTags>Dependency Injection IoC Dinja</PackageTags>
+        <PackageLicenseFile>LICENCE.md</PackageLicenseFile>
         <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
-        <PackageVersion>1.0.1</PackageVersion>
+        <PackageVersion>1.0.2</PackageVersion>
+        <PackageIcon>nuget-icon.png</PackageIcon>
+        <PackageReadmeFile>README.md</PackageReadmeFile>
+        <FileVersion>1.0.2</FileVersion>
+        <AssemblyVersion>1.0.2</AssemblyVersion>
     </PropertyGroup>
 
     <ItemGroup>
-      <None Include="..\LICENSE">
+      <None Include="..\LICENCE.md">
+        <Pack>True</Pack>
+        <PackagePath>\</PackagePath>
+      </None>
+      <None Include="..\nuget-icon.png">
+        <Pack>True</Pack>
+        <PackagePath>\</PackagePath>
+      </None>
+      <None Include="..\README.md">
         <Pack>True</Pack>
         <PackagePath>\</PackagePath>
       </None>
