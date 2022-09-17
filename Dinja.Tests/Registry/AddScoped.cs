@@ -1,6 +1,5 @@
 ﻿using Dinja.Tests.Registry.Models;
 using Microsoft.Extensions.DependencyInjection;
-using Version = System.Version;
 
 namespace Dinja.Tests.Registry;
 
@@ -11,12 +10,12 @@ public class AddScoped : TestFixtureBase
     public void Should_add_scoped_service_into_collection_correctly()
     {
         //Act
-        Registry.AddScoped<Version>();
+        Registry.AddScoped<AppVersion>();
         
         //Assert
         Assert.That(Registry.Services
             .Where(s => s.Lifetime == ServiceLifetime.Scoped)
-            .Any(s => s.ServiceType == typeof(Version)), Is.True);
+            .Any(s => s.ServiceType == typeof(AppVersion)), Is.True);
     }
     
     [Test]

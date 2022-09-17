@@ -1,6 +1,5 @@
 ﻿using Dinja.Tests.Registry.Models;
 using Microsoft.Extensions.DependencyInjection;
-using Version = System.Version;
 
 namespace Dinja.Tests.Registry;
 
@@ -11,12 +10,12 @@ public class AddTransient : TestFixtureBase
     public void Should_add_transient_service_into_collection_correctly()
     {
         //Act
-        Registry.AddTransient<Version>();
+        Registry.AddTransient<AppVersion>();
         
         //Assert
         Assert.That(Registry.Services
             .Where(s => s.Lifetime == ServiceLifetime.Transient)
-            .Any(s => s.ServiceType == typeof(Version)), Is.True);
+            .Any(s => s.ServiceType == typeof(AppVersion)), Is.True);
     }
     
     [Test]

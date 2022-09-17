@@ -27,8 +27,8 @@ public class AddEntryPoint : TestFixtureBase
             {
                 Assert.That(_appVersion, Is.Not.Null);
                 Assert.That(_appVersion.Major, Is.EqualTo(1));
-                Assert.That(_appVersion.Minor, Is.EqualTo(0));
-                Assert.That(_appVersion.Patch, Is.EqualTo(0));
+                Assert.That(_appVersion.Minor, Is.EqualTo(2));
+                Assert.That(_appVersion.Patch, Is.EqualTo(3));
             });
         }
     }

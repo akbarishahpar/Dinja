@@ -1,6 +1,5 @@
 ﻿using Dinja.Tests.Registry.Models;
 using Microsoft.Extensions.DependencyInjection;
-using Version = System.Version;
 
 namespace Dinja.Tests.Registry;
 
@@ -11,12 +10,12 @@ public class AddSingleton : TestFixtureBase
     public void Should_add_singleton_service_into_collection_correctly()
     {
         //Act
-        Registry.AddSingleton<Version>();
+        Registry.AddSingleton<AppVersion>();
         
         //Assert
         Assert.That(Registry.Services
             .Where(s => s.Lifetime == ServiceLifetime.Singleton)
-            .Any(s => s.ServiceType == typeof(Version)), Is.True);
+            .Any(s => s.ServiceType == typeof(AppVersion)), Is.True);
     }
     
     [Test]
