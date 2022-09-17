@@ -1,4 +1,7 @@
+![](https://raw.githubusercontent.com/akbarishahpar/Dinja/main/logo.png)
+
 # Dinja
+
 Theses days it is common to use Microsoft dependency injection tool for .Net developers. It's lightweight, easy to use and integrated with ASP.Net Core, MAUI and probably other frameworks developed by Microsoft. However, when it comes to register services into service collection using AddSingleton, AddScoped and AddTransient methods in ,for example, Startup.cs file, it is easy to get lost in a huge amount of codes written to just register these services. Moreover, in console applications, there is no pre-installed dependency injection tool and the burden is on the developer to take repetitive steps for using dependency injection. To address these issues, I've developed Dinja. It allows us to distribute registering services among the files by use of service registration attributes. In addition to service registration attributes, It helps developers to create an environment to use dependency injection in templates such as Console App easily.
 
 
