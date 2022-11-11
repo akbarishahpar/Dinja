@@ -13,14 +13,14 @@
     {
         public ServiceLifeCycle LifeCycle { get; }
 
-        public Type ServiceType { get; }
+        public Type? ServiceType { get; }
 
-        public Service(ServiceLifeCycle lifeCycle)
+        protected Service(ServiceLifeCycle lifeCycle)
         {
             LifeCycle = lifeCycle;
         }
 
-        public Service(ServiceLifeCycle lifeCycle, Type serviceType)
+        protected Service(ServiceLifeCycle lifeCycle, Type serviceType)
         {
             LifeCycle = lifeCycle;
             ServiceType = serviceType;

@@ -1,7 +1,6 @@
 ﻿using System.Reflection;
 using Dinja.ServiceTypes;
 using System.ComponentModel;
-using Dinja.Exceptions;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using Microsoft.Extensions.Configuration;
