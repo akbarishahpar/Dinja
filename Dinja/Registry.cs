@@ -34,12 +34,13 @@ namespace Dinja
             return new ConfigurationBuilder()
                 .SetBasePath(basePath)
                 .AddJsonFile(configurationJsonPath, false)
+                .AddEnvironmentVariables()
                 .Build();
         }
 
-        public Registry RegisterByExtensionMethod(Action<IServiceCollection> action)
+        public Registry RegisterByExtensionMethod(Action<IServiceCollection, IConfiguration> action)
         {
-            action(Services);
+            action(Services, _configuration);
             return this;
         }
         
@@ -121,16 +122,16 @@ namespace Dinja
             return AddContainer(container);
         }
 
-        public void AddEntryPoint<T>(Action<T> entryPoint) where T : class
+        public void AddEntryPoint<T>(Action<T, IConfiguration, IServiceProvider> entryPoint) where T : class
         {
             AddSingleton<T>();
 
             var serviceProvider = Services.BuildServiceProvider();
             var entryPointService = serviceProvider.GetRequiredService<T>();
 
-            entryPoint(entryPointService);
+            entryPoint(entryPointService, _configuration, serviceProvider);
         }
-        
+
         public async Task AddEntryPointAsync<T>(Func<T, Task> entryPoint) where T : class
         {
             AddSingleton<T>();
