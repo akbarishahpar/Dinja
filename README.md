@@ -131,7 +131,7 @@ Developers may use methods listed below to register their services:
       ```
 
       ```c#
-      [Singleton(typeof(IContractedScopedService))]
+      [Scoped(typeof(IContractedScopedService))]
       public class ContractedScopedService : IContractedScopedService
       {
       	//Implementation of the ContractedScopedService which implements IContrctedScopedService
@@ -145,7 +145,7 @@ Developers may use methods listed below to register their services:
       Just like above.
 
       ```c#
-      [Scoped]
+      [Transient]
       public class TransientService
       {
       	//Implementation of the TransientService
@@ -153,7 +153,7 @@ Developers may use methods listed below to register their services:
       ```
 
       ```c#
-      [Singleton(typeof(ITransientScopedService))]
+      [Transient(typeof(ITransientScopedService))]
       public class ContractedTransientService : ITransientScopedService
       {
       	//Implementation of the ContractedTransientService which implements IContrctedTransientService

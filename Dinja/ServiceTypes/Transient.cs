@@ -1,13 +1,12 @@
-﻿namespace Dinja.ServiceTypes
-{
-    public class Transient : Service
-    {
-        public Transient() : base(ServiceLifeCycle.Transient)
-        {
-        }
+﻿namespace Dinja.ServiceTypes;
 
-        public Transient(Type serviceType) : base(ServiceLifeCycle.Transient, serviceType)
-        {
-        }
+public class Transient : Service
+{
+    public Transient() : base(ServiceLifeCycle.Transient)
+    {
+    }
+
+    public Transient(Type serviceType) : base(ServiceLifeCycle.Transient, serviceType)
+    {
     }
 }

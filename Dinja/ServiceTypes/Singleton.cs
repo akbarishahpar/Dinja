@@ -1,13 +1,12 @@
-﻿namespace Dinja.ServiceTypes
-{
-    public class Singleton : Service
-    {
-        public Singleton() : base(ServiceLifeCycle.Singleton)
-        {
-        }
+﻿namespace Dinja.ServiceTypes;
 
-        public Singleton(Type serviceType) : base(ServiceLifeCycle.Singleton, serviceType)
-        {
-        }
+public class Singleton : Service
+{
+    public Singleton() : base(ServiceLifeCycle.Singleton)
+    {
+    }
+
+    public Singleton(Type serviceType) : base(ServiceLifeCycle.Singleton, serviceType)
+    {
     }
 }

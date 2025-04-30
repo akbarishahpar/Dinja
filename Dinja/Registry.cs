@@ -5,141 +5,140 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-namespace Dinja
+namespace Dinja;
+
+public class Registry
 {
-    public class Registry
+    private readonly IConfigurationRoot _configuration;
+        
+    public IServiceCollection Services { get; }
+
+    public Registry(string configurationJsonPath)
     {
-        private readonly IConfigurationRoot _configuration;
+        Services = new ServiceCollection();
+        _configuration = LoadConfigurationJson(configurationJsonPath);
+    }
+
+    public static IConfigurationRoot LoadConfigurationJson(string configurationJsonPath)
+    {
+        var parentDirectory = Directory.GetParent(AppContext.BaseDirectory);
+        var basePath = parentDirectory?.FullName ?? string.Empty;
+
+        var path = configurationJsonPath;
+        if (!Path.IsPathRooted(configurationJsonPath))
+            path = Path.Combine(basePath, configurationJsonPath);
+
+        if (!File.Exists(path))
+            throw new FileNotFoundException(path);
+
+        return new ConfigurationBuilder()
+            .SetBasePath(basePath)
+            .AddJsonFile(configurationJsonPath, false)
+            .AddEnvironmentVariables()
+            .Build();
+    }
+
+    public Registry RegisterByExtensionMethod(Action<IServiceCollection, IConfiguration> action)
+    {
+        action(Services, _configuration);
+        return this;
+    }
         
-        public IServiceCollection Services { get; }
+    public Registry AddConfiguration<T>() where T : class
+    {
+        return AddConfiguration<T>(typeof(T).Name);
+    }
 
-        public Registry(string configurationJsonPath)
-        {
-            Services = new ServiceCollection();
-            _configuration = LoadConfigurationJson(configurationJsonPath);
-        }
+    public Registry AddConfiguration<T>(string key) where T : class
+    {
+        var configurationSection = _configuration.GetSection(key);
+        if (!string.IsNullOrEmpty(configurationSection.Value))
+            throw new ShallowConfigurationIsNotSupportedException(key);
+        if (!configurationSection.GetChildren().Any())
+            throw new KeyNotFoundException();
+        Services.Configure<T>(configurationSection);
+        Services.AddSingleton(sp => sp.GetRequiredService<IOptions<T>>().Value);
+        return this;
+    }
 
-        public static IConfigurationRoot LoadConfigurationJson(string configurationJsonPath)
-        {
-            var parentDirectory = Directory.GetParent(AppContext.BaseDirectory);
-            var basePath = parentDirectory?.FullName ?? string.Empty;
+    public Registry AddSingleton<TService>()
+        where TService : class
+    {
+        Services.AddSingleton<TService>();
+        return this;
+    }
 
-            var path = configurationJsonPath;
-            if (!Path.IsPathRooted(configurationJsonPath))
-                path = Path.Combine(basePath, configurationJsonPath);
+    public Registry AddSingleton<TService, TImplementation>()
+        where TService : class where TImplementation : class, TService
+    {
+        Services.AddSingleton<TService, TImplementation>();
+        return this;
+    }
 
-            if (!File.Exists(path))
-                throw new FileNotFoundException(path);
+    public Registry AddScoped<TService>()
+        where TService : class
+    {
+        Services.AddScoped<TService>();
+        return this;
+    }
 
-            return new ConfigurationBuilder()
-                .SetBasePath(basePath)
-                .AddJsonFile(configurationJsonPath, false)
-                .AddEnvironmentVariables()
-                .Build();
-        }
+    public Registry AddScoped<TService, TImplementation>()
+        where TService : class where TImplementation : class, TService
+    {
+        Services.AddScoped<TService, TImplementation>();
+        return this;
+    }
 
-        public Registry RegisterByExtensionMethod(Action<IServiceCollection, IConfiguration> action)
-        {
-            action(Services, _configuration);
-            return this;
-        }
+    public Registry AddTransient<TService>()
+        where TService : class
+    {
+        Services.AddTransient<TService>();
+        return this;
+    }
+
+    public Registry AddTransient<TService, TImplementation>()
+        where TService : class where TImplementation : class, TService
+    {
+        Services.AddTransient<TService, TImplementation>();
+        return this;
+    }
         
-        public Registry AddConfiguration<T>() where T : class
-        {
-            return AddConfiguration<T>(typeof(T).Name);
-        }
-
-        public Registry AddConfiguration<T>(string key) where T : class
-        {
-            var configurationSection = _configuration.GetSection(key);
-            if (!string.IsNullOrEmpty(configurationSection.Value))
-                throw new ShallowConfigurationIsNotSupportedException(key);
-            if (!configurationSection.GetChildren().Any())
-                throw new KeyNotFoundException();
-            Services.Configure<T>(configurationSection);
-            Services.AddSingleton(sp => sp.GetRequiredService<IOptions<T>>().Value);
-            return this;
-        }
-
-        public Registry AddSingleton<TService>()
-            where TService : class
-        {
-            Services.AddSingleton<TService>();
-            return this;
-        }
-
-        public Registry AddSingleton<TService, TImplementation>()
-            where TService : class where TImplementation : class, TService
-        {
-            Services.AddSingleton<TService, TImplementation>();
-            return this;
-        }
-
-        public Registry AddScoped<TService>()
-            where TService : class
-        {
-            Services.AddScoped<TService>();
-            return this;
-        }
-
-        public Registry AddScoped<TService, TImplementation>()
-            where TService : class where TImplementation : class, TService
-        {
-            Services.AddScoped<TService, TImplementation>();
-            return this;
-        }
-
-        public Registry AddTransient<TService>()
-            where TService : class
-        {
-            Services.AddTransient<TService>();
-            return this;
-        }
-
-        public Registry AddTransient<TService, TImplementation>()
-            where TService : class where TImplementation : class, TService
-        {
-            Services.AddTransient<TService, TImplementation>();
-            return this;
-        }
+    public Registry AddHostedService<TImplementation>()
+        where TImplementation : class, IHostedService
+    {
+        Services.AddHostedService<TImplementation>();
+        return this;
+    }
         
-        public Registry AddHostedService<TImplementation>()
-            where TImplementation : class, IHostedService
-        {
-            Services.AddHostedService<TImplementation>();
-            return this;
-        }
-        
-        public Registry AddContainer<T>(T container) where T : Container
-        {
-            container.ConfigureServices(Services, _configuration);
-            return this;
-        }
+    public Registry AddContainer<T>(T container) where T : Container
+    {
+        container.ConfigureServices(Services, _configuration);
+        return this;
+    }
 
-        public Registry AddContainer(Assembly assembly)
-        {
-            var container = new Container(assembly);
-            return AddContainer(container);
-        }
+    public Registry AddContainer(Assembly assembly)
+    {
+        var container = new Container(assembly);
+        return AddContainer(container);
+    }
 
-        public void AddEntryPoint<T>(Action<T, IConfiguration, IServiceProvider> entryPoint) where T : class
-        {
-            AddSingleton<T>();
+    public void AddEntryPoint<T>(Action<T, IConfiguration, IServiceProvider> entryPoint) where T : class
+    {
+        AddSingleton<T>();
 
-            var serviceProvider = Services.BuildServiceProvider();
-            var entryPointService = serviceProvider.GetRequiredService<T>();
+        var serviceProvider = Services.BuildServiceProvider();
+        var entryPointService = serviceProvider.GetRequiredService<T>();
 
-            entryPoint(entryPointService, _configuration, serviceProvider);
-        }
+        entryPoint(entryPointService, _configuration, serviceProvider);
+    }
 
-        public async Task AddEntryPointAsync<T>(Func<T, Task> entryPoint) where T : class
-        {
-            AddSingleton<T>();
+    public async Task AddEntryPointAsync<T>(Func<T, Task> entryPoint) where T : class
+    {
+        AddSingleton<T>();
 
-            var serviceProvider = Services.BuildServiceProvider();
-            var entryPointService = serviceProvider.GetRequiredService<T>();
+        var serviceProvider = Services.BuildServiceProvider();
+        var entryPointService = serviceProvider.GetRequiredService<T>();
 
-            await entryPoint(entryPointService);
-        }
+        await entryPoint(entryPointService);
     }
 }

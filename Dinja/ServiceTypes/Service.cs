@@ -1,29 +1,28 @@
-﻿namespace Dinja.ServiceTypes
+﻿namespace Dinja.ServiceTypes;
+
+public enum ServiceLifeCycle
 {
-    public enum ServiceLifeCycle
+    Singleton,
+    Scoped,
+    Transient,
+    HostedService,
+    Configuration
+}
+
+public class Service : Attribute
+{
+    public ServiceLifeCycle LifeCycle { get; }
+
+    public Type? ServiceType { get; }
+
+    protected Service(ServiceLifeCycle lifeCycle)
     {
-        Singleton,
-        Scoped,
-        Transient,
-        HostedService,
-        Configuration
+        LifeCycle = lifeCycle;
     }
 
-    public class Service : Attribute
+    protected Service(ServiceLifeCycle lifeCycle, Type serviceType)
     {
-        public ServiceLifeCycle LifeCycle { get; }
-
-        public Type? ServiceType { get; }
-
-        protected Service(ServiceLifeCycle lifeCycle)
-        {
-            LifeCycle = lifeCycle;
-        }
-
-        protected Service(ServiceLifeCycle lifeCycle, Type serviceType)
-        {
-            LifeCycle = lifeCycle;
-            ServiceType = serviceType;
-        }
+        LifeCycle = lifeCycle;
+        ServiceType = serviceType;
     }
 }

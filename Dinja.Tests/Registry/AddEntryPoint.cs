@@ -8,7 +8,7 @@ public class AddEntryPoint : TestFixtureBase
     {
         Registry
             .AddConfiguration<Models.AppVersion>()
-            .AddEntryPoint<App>(program => program.EntryPoint());
+            .AddEntryPoint<App>((program, _, _) => program.EntryPoint());
     }
     
     // ReSharper disable once ClassNeverInstantiated.Local

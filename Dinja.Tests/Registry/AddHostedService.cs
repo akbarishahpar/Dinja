@@ -1,5 +1,4 @@
-﻿using Dinja.Tests.Registry.Models;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
 namespace Dinja.Tests.Registry;

@@ -1,9 +1,8 @@
-﻿namespace Dinja.ServiceTypes
+﻿namespace Dinja.ServiceTypes;
+
+public class HostedService : Service
 {
-    public class HostedService : Service
+    public HostedService() : base(ServiceLifeCycle.HostedService)
     {
-        public HostedService() : base(ServiceLifeCycle.HostedService)
-        {
-        }
     }
 }
