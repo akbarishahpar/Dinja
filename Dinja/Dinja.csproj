@@ -12,11 +12,11 @@
         <PackageTags>Dependency Injection IoC Dinja</PackageTags>
         <PackageLicenseFile>LICENCE.md</PackageLicenseFile>
         <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
-        <PackageVersion>1.0.2</PackageVersion>
         <PackageIcon>nuget-icon.png</PackageIcon>
         <PackageReadmeFile>README.md</PackageReadmeFile>
-        <FileVersion>1.0.2</FileVersion>
-        <AssemblyVersion>1.0.2</AssemblyVersion>
+        <PackageVersion>1.0.3</PackageVersion>
+        <FileVersion>1.0.3</FileVersion>
+        <AssemblyVersion>1.0.3</AssemblyVersion>
     </PropertyGroup>
 
     <ItemGroup>
