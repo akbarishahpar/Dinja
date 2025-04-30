@@ -1,5 +1,3 @@
-<p align="center"><img src="https://raw.githubusercontent.com/akbarishahpar/Dinja/main/logo.png" alt="Dinja" /></p>
-
 # Dinja
 
 **Dinja** is a simple and powerful library for managing Dependency Injection (DI) in .NET applications. It is designed to ease the process of registering and managing services, especially when you need to break up your service registration logic across multiple files. It helps developers to set up DI more efficiently, particularly in **Console Applications** where DI is not pre-configured.
